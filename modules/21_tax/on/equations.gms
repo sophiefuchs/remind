@@ -305,6 +305,36 @@ sum(tax_import_type_21, p21_tau_Import(t, regi, tradePe, tax_import_type_21)$sam
  p_cintraw(tradePe) * vm_Mport(t,regi,tradePe) - p21_taxrevImport0(t,regi,tradePe,tax_import_type_21)$sameas(tax_import_type_21, "avC02taxmarkup") )
 ;
 
+***-------------------------------------------
+*' SF: revenue recycling of CO2tax to RE investments: 
+*' investments in renewables are those of reference scenario with tax & no revenue recycling 
+*# + the revenues received from the tax
+***-------------------------------------------------------
+
+*** 
+$ifthen.taxrc %cm_taxrc_RE% == "REdirect"
+q21_rc_tau_import_RE(t,regi)..  !! SF: needs to be declared in declarations, check whether teVRE is defined in core declarations or whether steve defined them. Alternatively sum up over all relevant technologies.
+  sum(en2en(enty,enty2,te)$teVRE(te), !! this would be only wind + solar. steve had excluded csp (ask him why or check whether this changes results) (storage below. could also add BECCS, green hydrogen, green e-fuels and electric mobility and/or green R&D (donT know if we have var on that))
+      v_costInvTeDir(ttot,regi,te) + v_costInvTeAdj(ttot,regi,te)$teAdj(te) 
+  )
+  +
+  sum(teNoTransform,  !! check whether gives better results if without csp, as Steve did.
+    v_costInvTeDir(ttot,regi,teNoTransform) + v_costInvTeAdj(ttot,regi,teNoTransform)$teAdj(teNoTransform)
+  )
+=g= 
+  sum(tradePE, v21_taxrevImport(t,regi,tradePe)) !! SF: Steve's variable for G20 coal (150 bn) replace by REdirect v21_taxrevImport (t,regi,tradePe) create new var that only depends on t, regi (summed up over ll tradePE)
+  +                                               !! check whether needs to be multiplied by *1e-3 (unit)
+                                                  !! check whether it is a problem, that our variable is there for each time step, not just per region
+  sum(en2en(enty,enty2,te)$teVRE(te),
+      p47_ref_costInvTeDir_RE(ttot,regi,te) + p47_ref_costInvTeAdj_RE(ttot,regi,te)$teAdj(te)  !! Reference VRE investment SF: needs reference value from Rahels runs. 
+  )
+  +
+  sum(teNoTransform,
+    p47_ref_costInvTeDir_RE(ttot,regi,teNoTransform) + p47_ref_costInvTeAdj_RE(ttot,regi,teNoTransform)$teAdj(teNoTransform)  !! Reference grid + storage investment
+  )
+  ;
+  $endif.taxrc
+  ####
 
 
 ***---------------------------------------------------------------------------
