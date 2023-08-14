@@ -312,30 +312,24 @@ sum(tax_import_type_21, p21_tau_Import(t, regi, tradePe, tax_import_type_21)$sam
 ***-------------------------------------------------------
 
 $ifthen.importtaxrc %cm_taxrc_RE% == "REdirect"
-q21_rc_tau_import_RE(regi)..   
-sum(
-ttot$(ttot.val eq 2025),                     
-  sum(en2en(enty,enty2,te)$(teVRE(te) and not sameas(te,"csp")),
-      v_costInvTeDir(ttot,regi,te) + v_costInvTeAdj(ttot,regi,te)$teAdj(te) 
+q21_rc_tau_import_RE(t,regi)..                       
+  sum(en2en(enty,enty2,te)$(teVRE(te)),
+      v_costInvTeDir(t,regi,te) + v_costInvTeAdj(t,regi,te)$teAdj(te) 
   )
   +
-  sum(teNoTransform$(not sameas(teNoTransform,"storcsp") and not sameas(teNoTransform,"gridcsp")),
-    v_costInvTeDir(ttot,regi,teNoTransform) + v_costInvTeAdj(ttot,regi,teNoTransform)$teAdj(teNoTransform)
+  sum(teNoTransform,
+    v_costInvTeDir(t,regi,teNoTransform) + v_costInvTeAdj(t,regi,teNoTransform)$teAdj(teNoTransform)
   )
-)
 =g= 
-sum(
-ttot$(ttot.val eq 2025),
   sum(tradePE, v21_taxrevImport(t,regi,tradePe))        
   +
-  sum(en2en(enty,enty2,te)$(teVRE(te) and not sameas(te,"csp")),
-      p47_ref_costInvTeDir_RE(ttot,regi,te) + p47_ref_costInvTeAdj_RE(ttot,regi,te)$teAdj(te)  !! Reference VRE investment
+  sum(en2en(enty,enty2,te)$(teVRE(te)),
+      p47_ref_costInvTeDir_RE(t,regi,te) + p47_ref_costInvTeAdj_RE(t,regi,te)$teAdj(te)  !! Reference VRE investment
   )
   +
-  sum(teNoTransform$(not sameas(teNoTransform,"storcsp") and not sameas(teNoTransform,"gridcsp")),
-    p47_ref_costInvTeDir_RE(ttot,regi,teNoTransform) + p47_ref_costInvTeAdj_RE(ttot,regi,teNoTransform)$teAdj(teNoTransform)  !! Reference grid + storage investment
+  sum(teNoTransform,
+    p47_ref_costInvTeDir_RE(t,regi,teNoTransform) + p47_ref_costInvTeAdj_RE(t,regi,teNoTransform)$teAdj(teNoTransform)  !! Reference grid + storage investment
   )
-)
 ;
 $endif.importtaxrc
 

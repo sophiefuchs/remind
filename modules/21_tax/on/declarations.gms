@@ -152,7 +152,12 @@ q21_implicitDiscRate(ttot,all_regi)             "calculation of the implicit dis
 q21_taxemiMkt(ttot,all_regi,all_emiMkt)         "calculation of specific emission market tax on CO2 emissions"
 q21_taxrevImport(ttot,all_regi,all_enty)        "calculation of import tax"
 q21_taxrevChProdStartYear(ttot,all_regi)        "calculation of tax to limit changes compared to reference run in cm_startyear"
+;
+
+$ifthen.importtaxrc %cm_taxrc_RE% == "REdirect"
+equations
 q21_rc_tau_import_RE(ttot,all_regi)             "investm. in RE (VRE & Storage) is bigger than tax rev. from import CO2 tax and investm in RE in reference scenario"
 ;
+$endif.importtaxrc
 
 *** EOF ./modules/21_tax/on/declarations.gms
