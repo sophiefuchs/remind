@@ -76,10 +76,10 @@ Parameter
 ;
 $endif.import
 
-$ifthen.importtaxrc %cm_pubfinex_pol% == "REdirect"
-parameters 
-p47_ref_costInvTeDir_RE(ttot,all_regi,all_te)                                  "RE direct investment volume in reference scenario"
-p47_ref_costInvTeAdj_RE(ttot,all_regi,all_te)                                  "RE adjustment cost investment volume in reference scenario"
+$ifthen.importtaxrc %cm_taxrc_RE% == "REdirect"
+Parameters 
+  p47_ref_costInvTeDir_RE(ttot,all_regi,all_te)                                  "RE direct investment volume in reference scenario"
+  p47_ref_costInvTeAdj_RE(ttot,all_regi,all_te)                                  "RE adjustment cost investment volume in reference scenario"
 ;
 $endif.importtaxrc
 
@@ -152,7 +152,7 @@ q21_implicitDiscRate(ttot,all_regi)             "calculation of the implicit dis
 q21_taxemiMkt(ttot,all_regi,all_emiMkt)         "calculation of specific emission market tax on CO2 emissions"
 q21_taxrevImport(ttot,all_regi,all_enty)        "calculation of import tax"
 q21_taxrevChProdStartYear(ttot,all_regi)        "calculation of tax to limit changes compared to reference run in cm_startyear"
-q21_rc_tau_import_RE(t,regi)..                  "revenue recycling condition: investm. in RE (VRE & Storage) >= tax rev. from import CO2 tax + investm in RE in reference scenario"
+q21_rc_tau_import_RE(ttot,all_regi)             "investm. in RE (VRE & Storage) is bigger than tax rev. from import CO2 tax and investm in RE in reference scenario"
 ;
 
 *** EOF ./modules/21_tax/on/declarations.gms
