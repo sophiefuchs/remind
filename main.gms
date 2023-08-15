@@ -1105,6 +1105,8 @@ parameter
 ;
   c_changeProdCost = 5; !! def 5
 *'
+
+
 ***-----------------------------------------------------------------------------
 *' ####                     FLAGS
 ***-----------------------------------------------------------------------------
@@ -1607,6 +1609,9 @@ $setglobal c_CES_calibration_iterations  10     !!  def  =  10
 $setglobal c_CES_calibration_industry_FE_target  1
 $setglobal c_testOneRegi_region  EUR       !! def = EUR
 $setglobal cm_fixCO2price  off !! def = off
+
+
+$setglobal cm_taxrc_RE  REdirect "switch to define whether tax on (CO2 content of) energy imports is recycled as additional direct investments in renewables" !! " def = none
 
 *' @stop
 
